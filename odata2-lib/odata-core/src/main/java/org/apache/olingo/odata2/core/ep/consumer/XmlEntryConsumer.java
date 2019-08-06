@@ -60,7 +60,6 @@ import org.apache.olingo.odata2.core.uri.ExpandSelectTreeNodeImpl;
  * Atom/XML format reader/consumer for entries.
  * 
  * {@link XmlEntryConsumer} instance can be reused for several
- * {@link #readEntry(XMLStreamReader, EntityInfoAggregator, EntityProviderReadProperties)} calls
  * but be aware that the instance and their <code>readEntry*</code> methods are <b>NOT THREAD SAFE</b>.
  * 
  */
@@ -168,11 +167,11 @@ public class XmlEntryConsumer {
             reader.require(XMLStreamConstants.END_ELEMENT, customNamespaceURI, tagName);
 
             final EntityPropertyInfo propertyInfo = getValidatedPropertyInfo(eia, tagName);
-            final Class<?> typeMapping = typeMappings.getMappingClass(propertyInfo.getName());
+            final Class typeMapping = typeMappings.getMappingClass(propertyInfo.getName());
             final EdmSimpleType type = (EdmSimpleType) propertyInfo.getType();
             final Object value = type.valueOfString(text, EdmLiteralKind.DEFAULT,
                 readProperties == null || readProperties.isValidatingFacets() ? propertyInfo.getFacets() : null,
-                typeMapping == null ? type.getDefaultType() : typeMapping);
+                    typeMapping == null ? type.getDefaultType() : typeMapping);
             properties.put(tagName, value);
           }
         }

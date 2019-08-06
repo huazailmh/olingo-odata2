@@ -22,6 +22,7 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Date;
@@ -80,6 +81,8 @@ public class JPATypeConverter {
       return EdmSimpleTypeKind.Single;
     } else if (jpaType.equals(BigDecimal.class)) {
       return EdmSimpleTypeKind.Decimal;
+    } else if (jpaType.equals(BigInteger.class)) {
+        return EdmSimpleTypeKind.Int64;
     } else if (jpaType.equals(byte[].class)) {
       return EdmSimpleTypeKind.Binary;
     } else if (jpaType.equals(Byte.class) || jpaType.equals(byte.class)) {
@@ -88,6 +91,10 @@ public class JPATypeConverter {
       return EdmSimpleTypeKind.Boolean;
     } else if (jpaType.equals(java.sql.Time.class)) {
       return EdmSimpleTypeKind.Time;
+    } else if (jpaType.equals(java.time.Instant.class)) {
+        return EdmSimpleTypeKind.DateTime;
+    } else if (jpaType.equals(java.time.LocalDate.class)) {
+        return EdmSimpleTypeKind.DateTime;
     } else if (jpaType.equals(Date.class) || jpaType.equals(Calendar.class) ||
         jpaType.equals(Timestamp.class) || jpaType.equals(java.util.Date.class)) {
       try {

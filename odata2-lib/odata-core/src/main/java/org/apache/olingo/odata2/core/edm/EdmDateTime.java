@@ -19,6 +19,7 @@
 package org.apache.olingo.odata2.core.edm;
 
 import java.sql.Timestamp;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -163,6 +164,12 @@ public class EdmDateTime extends AbstractSimpleType {
       timeInMillis = ((Calendar) value).getTimeInMillis();
     } else if (value instanceof Long) {
       timeInMillis = ((Long) value).longValue();
+    } else if (value.getClass().getName().equals("java.time.Instant")) {
+      timeInMillis =  ((java.time.Instant)value).toEpochMilli();
+      //timeInMillis = System.currentTimeMillis();//TODO
+    } else if (value.getClass().getName().equals("java.time.LocalDate")) {
+      timeInMillis = ((java.time.LocalDate)value).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
+      //timeInMillis = System.currentTimeMillis();//TODO
     } else {
       throw new EdmSimpleTypeException(EdmSimpleTypeException.VALUE_TYPE_NOT_SUPPORTED.addContent(value.getClass()));
     }

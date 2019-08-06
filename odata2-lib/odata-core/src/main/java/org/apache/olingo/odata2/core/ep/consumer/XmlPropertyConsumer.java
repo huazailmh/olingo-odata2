@@ -200,7 +200,7 @@ public class XmlPropertyConsumer {
     }
   }
 
-  private Object convert(final EntityPropertyInfo property, final String value, final Class<?> typeMapping,
+  private Object convert(final EntityPropertyInfo property, final String value, final Class typeMapping,
       final EntityProviderReadProperties readProperties) throws EdmSimpleTypeException {
     final EdmSimpleType type = (EdmSimpleType) property.getType();
     return type.valueOfString(value, EdmLiteralKind.DEFAULT,
